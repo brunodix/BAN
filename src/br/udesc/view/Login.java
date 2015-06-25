@@ -96,10 +96,11 @@ public class Login extends JDialog {
 			stm.setString(2, String.valueOf(pwdSenha.getPassword()));
 			ResultSet set = stm.executeQuery();
 			if (set.next()) {
-				// login ok
+				System.out.println("Logado");
 			} else {
-				// login nok
+				System.out.println("Eita errou!");
 			}
+			set.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
