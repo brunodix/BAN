@@ -9,7 +9,13 @@ import java.sql.SQLException;
 public class Main {
 
 	public static void main(String[] args) {
-		new Main().start();
+		//new Main().start();
+		try {
+			new Main().consulta();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void start() {
@@ -24,12 +30,13 @@ public class Main {
 		}
 	}
 	
-	// só exemplo
+	// só exemplos
 	private void consulta() throws SQLException{
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost/credconsult?" +
-                        "user=minty&password=greatsqldb");
+                        "user=root&password=root");
 		PreparedStatement stm = con.prepareStatement("select * from A where id = ?");
-		stm.setLong(0, 1);
+		stm.setLong(1, 1);
+		stm.execute();
 		ResultSet set = stm.getResultSet();
 		while (set.next()) {
 			// coluna 1 do resultado
