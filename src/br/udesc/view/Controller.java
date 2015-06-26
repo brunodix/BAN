@@ -10,9 +10,10 @@ public class Controller {
 		return instance;
 	}
 	
-	private Login login;
-	
+	private Login login;	
 	private Main window;
+	private Consultas consultas;
+	private Usuarios usuarios;
 	
 	private Controller() {
 	};
@@ -31,6 +32,21 @@ public class Controller {
 	public void showMain() {
 		window = new Main();
 		window.showFrame();
+	}
+	
+	public void showConsultas(){
+		consultas = new Consultas();
+		consultas.setVisible(true);
+	}
+	
+	public void hideConsultas(){
+		consultas.setVisible(false);
+		consultas.dispose();
+	}
+	
+	public void showUsuarios(){
+		usuarios = new Usuarios();
+		usuarios.setVisible(true);
 	}
 
 }
