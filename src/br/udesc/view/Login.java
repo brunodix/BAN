@@ -34,9 +34,7 @@ public class Login extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			Login dialog = new Login();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
+			Controller.getInstance().showLogin();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -91,12 +89,14 @@ public class Login extends JDialog {
 	
 	private void tryLogin() {
 		try {
-			PreparedStatement stm = ConnectionManager.getInstance().getStatement("select count(email) from usuario where email=? and senha=?");
+			PreparedStatement stm = ConnectionManager.getInstance().getStatement("select email from usuario where email=? and senha=?");
 			stm.setString(1, txtUsuario.getText());
 			stm.setString(2, String.valueOf(pwdSenha.getPassword()));
 			ResultSet set = stm.executeQuery();
 			if (set.next()) {
 				System.out.println("Logado");
+				Controller.getInstance().hideLogin();
+				Controller.getInstance().showMain();
 			} else {
 				System.out.println("Eita errou!");
 			}
@@ -107,3 +107,4 @@ public class Login extends JDialog {
 		
 	}
 }
+
