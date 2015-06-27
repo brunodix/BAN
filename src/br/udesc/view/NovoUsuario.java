@@ -6,9 +6,18 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import br.udesc.core.ConnectionManager;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.swing.SwingConstants;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -81,7 +90,11 @@ public class NovoUsuario extends JFrame {
 		JCheckBox chckbxAdministrador = new JCheckBox("Administrador?");
 		
 		JButton btnSalvar = new JButton("Salvar");
-		
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tryInsert();
+			}
+		});
 		JButton btnCancelar = new JButton("Cancelar");
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
@@ -142,5 +155,20 @@ public class NovoUsuario extends JFrame {
 					.addContainerGap(67, Short.MAX_VALUE))
 		);
 		panel.setLayout(gl_panel);
+	}
+	
+	private void tryInsert() {
+		try {
+			PreparedStatement stm = ConnectionManager.getInstance().getStatement("Insert into usuario values(?, ?, ?, ?, true, ?)");
+			stm.setString(1, textFieldEmail.getText());
+			stm.setString(2, textFieldSenha.getText());
+			stm.setString(3, textFieldNome.getText());
+			stm.setString(4, textFieldSenha.getText());
+			stm.setInt(5, 1);
+			stm.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 }
