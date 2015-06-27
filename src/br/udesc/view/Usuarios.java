@@ -5,18 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
-
-import javax.swing.border.EmptyBorder;
 
 public class Usuarios extends JFrame {
 
@@ -24,7 +18,6 @@ public class Usuarios extends JFrame {
 	public final static String COLUMN_NAMES[] = { "Email", "CPF" };
 	
 	private JPanel contentPane;
-	private JTable table;
 	private JButton btnEditar;
 	
 	/**

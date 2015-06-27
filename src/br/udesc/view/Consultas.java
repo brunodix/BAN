@@ -17,6 +17,8 @@ import br.udesc.core.ConnectionManager;
 
 public class Consultas extends JFrame {
 
+	private static final long serialVersionUID = 1L;
+
 	public final static String COLUMN_NAMES[] = { "Documento", "T. Documento",
 			"Hora", "Integrador", "Usuário" };
 
@@ -37,7 +39,6 @@ public class Consultas extends JFrame {
 		contentPane.setLayout(new MigLayout("", "[grow][][][][grow]",
 				"[grow][37.00]"));
 
-		Object object[][] = new Object[0][2];
 		table = new JTable(getData(), COLUMN_NAMES);
 		contentPane.add(table, "cell 0 0 5 1,grow");
 

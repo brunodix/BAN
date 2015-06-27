@@ -1,62 +1,45 @@
 package br.udesc.view;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import br.udesc.core.ConnectionManager;
-
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.swing.SwingConstants;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+import net.miginfocom.swing.MigLayout;
+import br.udesc.core.ConnectionManager;
+import br.udesc.core.Papeis;
 
 public class NovoUsuario extends JFrame {
 
+	private static final long serialVersionUID = 1L;
+	
 	private JPanel contentPane;
 	private JTextField textFieldCpf;
 	private JTextField textFieldNome;
 	private JTextField textFieldEmail;
-	private JTextField textFieldSenha;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					NovoUsuario frame = new NovoUsuario();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JPasswordField textFieldSenha;
+	private JCheckBox chckbxAdministrador;
+	private JComboBox<Papeis> comboBox;
 
 	/**
 	 * Create the frame.
 	 */
 	public NovoUsuario() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setBounds(100, 100, 492, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -65,29 +48,40 @@ public class NovoUsuario extends JFrame {
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
 		
-		textFieldCpf = new JTextField();
-		textFieldCpf.setHorizontalAlignment(SwingConstants.LEFT);
-		textFieldCpf.setColumns(10);
-		
 		JLabel lbNome = new JLabel("Nome Completo");
-		
-		textFieldNome = new JTextField();
-		textFieldNome.setColumns(10);
 		
 		JLabel lbCpf = new JLabel("CPF");
 		
 		JLabel lbEmail = new JLabel("Email");
 		
+		JLabel lbSenha = new JLabel("Senha");
+		panel.setLayout(new MigLayout("", "[75px][12px][181.00,grow,fill][150]", "[20px][19px][19px][19px][23px][][25px,grow][]"));
+		
+		textFieldNome = new JTextField();
+		textFieldNome.setColumns(10);
+		panel.add(textFieldNome, "cell 2 0 2 1,grow");
+		
+		textFieldCpf = new JTextField();
+		textFieldCpf.setHorizontalAlignment(SwingConstants.LEFT);
+		textFieldCpf.setColumns(10);
+		panel.add(textFieldCpf, "cell 2 1,growx,aligny top");
+		panel.add(lbEmail, "cell 0 2,growx,aligny center");
+		panel.add(lbCpf, "cell 0 1,growx,aligny center");
+		panel.add(lbNome, "cell 0 0,alignx left,aligny center");
+		
 		textFieldEmail = new JTextField();
 		textFieldEmail.setHorizontalAlignment(SwingConstants.LEFT);
 		textFieldEmail.setColumns(10);
+		panel.add(textFieldEmail, "cell 2 2,growx,aligny top");
+		panel.add(lbSenha, "cell 0 3,growx,aligny center");
 		
-		JLabel lbSenha = new JLabel("Senha");
-		
-		textFieldSenha = new JTextField();
+		textFieldSenha = new JPasswordField();
 		textFieldSenha.setColumns(10);
+		panel.add(textFieldSenha, "cell 2 3,growx,aligny top");
 		
-		JCheckBox chckbxAdministrador = new JCheckBox("Administrador?");
+		chckbxAdministrador = new JCheckBox("Ativo");
+		chckbxAdministrador.setSelected(true);
+		panel.add(chckbxAdministrador, "cell 2 4,alignx left,aligny top");
 		
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
@@ -95,76 +89,27 @@ public class NovoUsuario extends JFrame {
 				tryInsert();
 			}
 		});
-		JButton btnCancelar = new JButton("Cancelar");
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(18)
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(lbEmail, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textFieldEmail, GroupLayout.PREFERRED_SIZE, 263, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(lbCpf, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textFieldCpf, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(lbNome)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textFieldNome, GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lbSenha, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(chckbxAdministrador)
-								.addComponent(textFieldSenha, GroupLayout.PREFERRED_SIZE, 142, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_panel.createSequentialGroup()
-									.addComponent(btnSalvar)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)))))
-					.addContainerGap())
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(13)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lbNome)
-						.addComponent(textFieldNome, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
-					.addGap(9)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lbCpf)
-						.addComponent(textFieldCpf, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lbEmail)
-						.addComponent(textFieldEmail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textFieldSenha, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lbSenha))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(chckbxAdministrador)
-					.addGap(18)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnSalvar)
-						.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(67, Short.MAX_VALUE))
-		);
-		panel.setLayout(gl_panel);
+		
+		JLabel lblPapel = new JLabel("Papel");
+		panel.add(lblPapel, "cell 0 5");
+		
+		comboBox = new JComboBox<>();
+		comboBox.setMaximumRowCount(3);
+		comboBox.setModel(new DefaultComboBoxModel<>(Papeis.values()));
+		panel.add(comboBox, "cell 2 5,growx");
+		panel.add(btnSalvar, "cell 3 7,alignx left,aligny top");
 	}
 	
 	private void tryInsert() {
 		try {
-			PreparedStatement stm = ConnectionManager.getInstance().getStatement("Insert into usuario values(?, ?, ?, ?, true, ?)");
+			PreparedStatement stm = ConnectionManager.getInstance().getStatement("Insert into usuario (email, cpf, nome, senha, ativo, papel) values(?, ?, ?, ?, ?, ?)");
 			stm.setString(1, textFieldEmail.getText());
-			stm.setString(2, textFieldSenha.getText());
+			stm.setString(2, textFieldCpf.getText());
 			stm.setString(3, textFieldNome.getText());
-			stm.setString(4, textFieldSenha.getText());
-			stm.setInt(5, 1);
+			stm.setString(4, String.valueOf(textFieldSenha.getPassword()));
+			stm.setBoolean(5, chckbxAdministrador.isSelected());
+			stm.setInt(6, ((Papeis) comboBox.getSelectedItem()).getValue());
+			
 			stm.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
