@@ -12,6 +12,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -101,6 +102,28 @@ public class NovoUsuario extends JFrame {
 	}
 	
 	private void tryInsert() {
+		if (textFieldEmail.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "O e-mail é obrigatório!");
+			return;
+		}
+		if (textFieldCpf.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "O CPF é obrigatório!");
+			return;
+		}
+		if (textFieldNome.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "O nome é obrigatório!");
+			return;
+		}
+		if (textFieldSenha.getPassword().length == 0) {
+			JOptionPane.showMessageDialog(this, "A senha é obrigatória!");
+			return;
+		}
+		if (comboBox.getSelectedItem() == null) {
+			JOptionPane.showMessageDialog(this, "Selecione um papel!");
+			return;
+		}
+		
+		
 		try {
 			PreparedStatement stm = ConnectionManager.getInstance().getStatement("Insert into usuario (email, cpf, nome, senha, ativo, papel) values(?, ?, ?, ?, ?, ?)");
 			stm.setString(1, textFieldEmail.getText());
