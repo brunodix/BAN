@@ -14,6 +14,7 @@ public class Controller {
 	private Main window;
 	private Consultas consultas;
 	private Usuarios usuarios;
+	private NovoUsuario novousuario;
 	
 	private Controller() {
 	};
@@ -47,6 +48,16 @@ public class Controller {
 	public void showUsuarios(){
 		usuarios = new Usuarios();
 		usuarios.setVisible(true);
+	}
+	
+	public void showNovoUsuario(){
+		novousuario = new NovoUsuario();
+		novousuario.setVisible(true);
+	}
+	
+	public void hideNovoUsuario(){
+		novousuario.setVisible(false);
+		novousuario.dispose();
 	}
 
 }
