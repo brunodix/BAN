@@ -5,6 +5,7 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import br.udesc.view.Controller;
 import br.udesc.view.Login;
 
 public class Main {
@@ -22,10 +23,6 @@ public class Main {
 		}
 		
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
-		Login login = new Login();
-		login.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		login.setVisible(true);
-		
-		
+		Controller.getInstance().showLogin();
 	}
 }

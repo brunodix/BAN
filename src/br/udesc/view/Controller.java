@@ -20,7 +20,7 @@ public class Controller {
 	
 	public void showLogin() {
 		login = new Login();
-		login.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		login.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		login.setVisible(true);
 	}
 	
