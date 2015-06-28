@@ -17,6 +17,7 @@ public class Controller {
 	private Consultas consultas;
 	private Usuarios usuarios;
 	private NovoUsuario novousuario;
+	private NovaConsulta novaconsulta;
 	
 	private Controller() {
 	};
@@ -68,6 +69,16 @@ public class Controller {
 
 	public void setEmailUsuario(String emailUsuario) {
 		this.emailUsuario = emailUsuario;
+	}
+	
+	public void showNovaConsulta(){
+		novaconsulta = new NovaConsulta();
+		novaconsulta.setVisible(true);
+	}
+	
+	public void hideNovaConsulta(){
+		novaconsulta.setVisible(false);
+		novaconsulta.dispose();
 	}
 
 }

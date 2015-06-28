@@ -44,6 +44,11 @@ public class Main {
 		frmTelaInicial.getContentPane().add(btnConsultas, "cell 3 1,grow");
 		
 		JButton btnRealizarConsulta = new JButton("Realizar consulta");
+		btnRealizarConsulta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Controller.getInstance().showNovaConsulta();
+			}
+		});
 		frmTelaInicial.getContentPane().add(btnRealizarConsulta, "cell 3 2,grow");
 	}
 	
