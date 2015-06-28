@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
 import br.udesc.core.ConnectionManager;
+import javax.swing.JScrollPane;
 
 public class Usuarios extends JFrame {
 
@@ -27,6 +28,7 @@ public class Usuarios extends JFrame {
 	private JButton btnEditar;
 	private JTable table;
 	private JButton btnRemover;
+	private JScrollPane scrollPane;
 	
 	/**
 	 * Create the frame.
@@ -38,7 +40,7 @@ public class Usuarios extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[grow][][][][grow]", "[grow][37.00]"));
+		contentPane.setLayout(new MigLayout("", "[grow][][][]", "[grow][37.00]"));
 		
 		JButton btnNovo = new JButton("Novo");
 		btnNovo.addActionListener(new ActionListener() {
@@ -47,9 +49,12 @@ public class Usuarios extends JFrame {
 			}
 		});
 		
+		scrollPane = new JScrollPane();
+		contentPane.add(scrollPane, "cell 0 0 4 1,grow");
+		
 		table = new JTable();
+		scrollPane.setViewportView(table);
 		table.setModel(new DefaultTableModel(getData(), COLUMN_NAMES));
-		contentPane.add(table, "cell 0 0 5 1,grow");
 
 		contentPane.add(btnNovo, "cell 1 1");
 		btnEditar = new JButton("Editar");

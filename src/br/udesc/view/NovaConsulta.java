@@ -26,36 +26,21 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
+import net.miginfocom.swing.MigLayout;
 
 public class NovaConsulta extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textFieldDocumento;
-	JComboBox comboBoxtipoDocumento = new JComboBox();
-	JComboBox comboBoxIntegrador = new JComboBox();
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					NovaConsulta frame = new NovaConsulta();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	JComboBox<ChaveValor> comboBoxtipoDocumento = new JComboBox<>();
+	JComboBox<ChaveValor> comboBoxIntegrador = new JComboBox<>();
 
 	/**
 	 * Create the frame.
 	 */
 	public NovaConsulta() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 492, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -66,67 +51,33 @@ public class NovaConsulta extends JFrame {
 		
 		JLabel lblDocumento = new JLabel("Documento");
 		
-		textFieldDocumento = new JTextField();
-		textFieldDocumento.setColumns(10);
-		
 		JLabel lblIntegrador = new JLabel("Integrador");
 		
 		
 		JLabel lblTipoDocumento = new JLabel("Tipo documento");
 		
-		//JComboBox comboBoxtipoDocumento = new JComboBox();
-		
-		comboBoxtipoDocumento.setMaximumRowCount(3);
-		
 		setTipo();
 		setIntegrador();
+		panel.setLayout(new MigLayout("", "[75px][12px][181.00,grow,fill][150]", "[20px][19px][19px][19px,grow][23px]"));
 		
-		JButton btnSalvar = new JButton("Salvar");
-		btnSalvar.addActionListener(new ActionListener() {
+		textFieldDocumento = new JTextField();
+		textFieldDocumento.setColumns(10);
+		panel.add(textFieldDocumento, "cell 2 0,grow");
+		panel.add(lblTipoDocumento, "cell 0 1,alignx left,aligny center");
+		
+		comboBoxtipoDocumento.setMaximumRowCount(3);
+		panel.add(comboBoxtipoDocumento, "cell 2 1,alignx left,aligny top");
+		panel.add(lblIntegrador, "cell 0 2,alignx left,aligny center");
+		panel.add(lblDocumento, "cell 0 0,alignx left,aligny center");
+		panel.add(comboBoxIntegrador, "cell 2 2,alignx left,aligny top");
+		
+		JButton btnConsultar = new JButton("Consultar");
+		btnConsultar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tryInsert();
 			}
 		});
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblTipoDocumento)
-								.addComponent(lblIntegrador)
-								.addComponent(lblDocumento))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(textFieldDocumento, GroupLayout.PREFERRED_SIZE, 237, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
-									.addComponent(comboBoxtipoDocumento, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(comboBoxIntegrador, 0, 93, Short.MAX_VALUE))))
-						.addComponent(btnSalvar))
-					.addContainerGap(97, Short.MAX_VALUE))
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblDocumento)
-						.addComponent(textFieldDocumento, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblTipoDocumento)
-						.addComponent(comboBoxtipoDocumento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblIntegrador)
-						.addComponent(comboBoxIntegrador, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(27)
-					.addComponent(btnSalvar)
-					.addContainerGap(119, Short.MAX_VALUE))
-		);
-		panel.setLayout(gl_panel);
+		panel.add(btnConsultar, "cell 3 4,alignx left,aligny top");
 	}
 	
 	private void setTipo() {
@@ -143,13 +94,7 @@ public class NovaConsulta extends JFrame {
 			
 			
 			while (set.next()) {
-				Object[] obj = new Object[3];
-				obj[0] = set.getInt(1);
-				obj[1] = set.getString(2);
-				Object[] itemData = new Object[] {obj[0], obj[1]};
-				
-				comboBoxtipoDocumento.addItem(obj[1]);
-				list.add(obj);
+				comboBoxtipoDocumento.addItem(new ChaveValor(set.getInt(1), set.getString(2)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -169,10 +114,7 @@ public class NovaConsulta extends JFrame {
 			
 			
 			while (set.next()) {
-				Object[] obj = new Object[3];
-				obj[0] = set.getInt(1);
-				obj[1] = set.getString(2);
-				comboBoxIntegrador.addItem(obj[1]);
+				comboBoxIntegrador.addItem(new ChaveValor(set.getInt(1), set.getString(2)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -187,11 +129,12 @@ public class NovaConsulta extends JFrame {
 		try {
 			PreparedStatement stm = ConnectionManager.getInstance().getStatement("Insert into consulta (hora_consulta, documento, integrador_id, usuario_email, tipo_documento_id) values(NOW(), ?, ?, ?, ?)");
 			stm.setString(1, textFieldDocumento.getText());
-			stm.setInt(2, 1); // Passar Integrador
+			stm.setInt(2, ((ChaveValor)comboBoxIntegrador.getSelectedItem()).getChave()); // Passar Integrador
 			stm.setString(3, Controller.getInstance().getEmailUsuario()); 
-			stm.setInt(4, 1); // Passar id Tipo documento
-			
-			stm.execute();
+			stm.setInt(4, ((ChaveValor)comboBoxtipoDocumento.getSelectedItem()).getChave()); // Passar id Tipo documento
+			if (stm.executeUpdate() > 0) {
+				JOptionPane.showMessageDialog(this, "Consulta realizada!");
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

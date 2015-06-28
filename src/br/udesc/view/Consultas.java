@@ -15,6 +15,8 @@ import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
 import br.udesc.core.ConnectionManager;
+import javax.swing.ListSelectionModel;
+import javax.swing.JScrollPane;
 
 public class Consultas extends JFrame {
 
@@ -25,7 +27,7 @@ public class Consultas extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
-	private JButton btnEditar;
+	private JScrollPane scrollPane;
 
 	/**
 	 * Create the frame.
@@ -37,17 +39,20 @@ public class Consultas extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[grow][][][][grow]", "[grow][37.00]"));
+		contentPane.setLayout(new MigLayout("", "[grow][]", "[grow][37.00]"));
+		
+		scrollPane = new JScrollPane();
+		contentPane.add(scrollPane, "cell 0 0 2 1,grow");
 
 		table = new JTable();
+		scrollPane.setViewportView(table);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setCellSelectionEnabled(true);
+		table.setColumnSelectionAllowed(true);
 		table.setModel(new DefaultTableModel(getData(), COLUMN_NAMES));
-		contentPane.add(table, "cell 0 0 5 1,grow");
 
 		JButton btnNovo = new JButton("Novo");
 		contentPane.add(btnNovo, "cell 1 1");
-
-		btnEditar = new JButton("Editar");
-		contentPane.add(btnEditar, "cell 2 1");
 	}
 
 	private Object[][] getData() {
@@ -85,5 +90,4 @@ public class Consultas extends JFrame {
 		}
 		return result;
 	}
-
 }
