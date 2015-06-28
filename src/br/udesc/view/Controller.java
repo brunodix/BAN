@@ -81,4 +81,11 @@ public class Controller {
 		novaconsulta.dispose();
 	}
 
+	public void showNovoUsuario(String value) {
+		novousuario = new NovoUsuario();
+		novousuario.setVisible(true);
+		novousuario.edit(value);
+		
+	}
+
 }

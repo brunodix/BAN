@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
 import br.udesc.core.ConnectionManager;
@@ -36,10 +37,10 @@ public class Consultas extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[grow][][][][grow]",
-				"[grow][37.00]"));
+		contentPane.setLayout(new MigLayout("", "[grow][][][][grow]", "[grow][37.00]"));
 
-		table = new JTable(getData(), COLUMN_NAMES);
+		table = new JTable();
+		table.setModel(new DefaultTableModel(getData(), COLUMN_NAMES));
 		contentPane.add(table, "cell 0 0 5 1,grow");
 
 		JButton btnNovo = new JButton("Novo");
