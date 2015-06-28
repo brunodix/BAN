@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
@@ -17,6 +18,8 @@ import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
 import br.udesc.core.ConnectionManager;
+import br.udesc.core.Papeis;
+
 import javax.swing.JScrollPane;
 
 public class Usuarios extends JFrame {
@@ -45,7 +48,12 @@ public class Usuarios extends JFrame {
 		JButton btnNovo = new JButton("Novo");
 		btnNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Controller.getInstance().showNovoUsuario();
+				if (Controller.getInstance().getPapelUsuario() == Papeis.ADMINISTRADOR) {
+					Controller.getInstance().showNovoUsuario();
+				} else {
+					JOptionPane.showMessageDialog(null, "Somente um usuário administrador pode criar usuários!");
+				}
+				
 			}
 		});
 		
@@ -60,9 +68,13 @@ public class Usuarios extends JFrame {
 		btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int row = table.getSelectedRow();
-				String value = (String) table.getModel().getValueAt(row, 0);
-				Controller.getInstance().showNovoUsuario(value);
+				if (Controller.getInstance().getPapelUsuario() == Papeis.ADMINISTRADOR) {
+					int row = table.getSelectedRow();
+					String value = (String) table.getModel().getValueAt(row, 0);
+					Controller.getInstance().showNovoUsuario(value);
+				} else {
+					JOptionPane.showMessageDialog(null, "Somente um usuário administrador pode editar usuários!");
+				}
 			}
 		});
 		contentPane.add(btnEditar, "cell 2 1");

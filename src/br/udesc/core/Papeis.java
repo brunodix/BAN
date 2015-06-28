@@ -14,4 +14,12 @@ public enum Papeis {
 		this.value = value;
 	}
 
+	public static Papeis valueOf(int papelUsuario) {
+		if (papelUsuario == 1) {
+			return Papeis.ADMINISTRADOR;
+		} else {
+			return PADRAO;
+		}
+	}
+
 }

@@ -2,6 +2,8 @@ package br.udesc.view;
 
 import javax.swing.JDialog;
 
+import br.udesc.core.Papeis;
+
 public class Controller {
 	
 	private static final Controller instance = new Controller();
@@ -11,9 +13,10 @@ public class Controller {
 	}
 	
 	private String emailUsuario;
+	private Papeis papelUsuario;
 	
 	private Login login;	
-	private Main window;
+	private MainWindow window;
 	private Consultas consultas;
 	private Usuarios usuarios;
 	private NovoUsuario novousuario;
@@ -34,7 +37,7 @@ public class Controller {
 	}
 
 	public void showMain() {
-		window = new Main();
+		window = new MainWindow();
 		window.showFrame();
 	}
 	
@@ -85,7 +88,14 @@ public class Controller {
 		novousuario = new NovoUsuario();
 		novousuario.setVisible(true);
 		novousuario.edit(value);
-		
+	}
+
+	public Papeis getPapelUsuario() {
+		return papelUsuario;
+	}
+
+	public void setPapelUsuario(int papelUsuario) {
+		this.papelUsuario = Papeis.valueOf(papelUsuario);
 	}
 
 }

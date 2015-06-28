@@ -97,13 +97,14 @@ public class Login extends JDialog {
 	
 	private void tryLogin() {
 		try {
-			PreparedStatement stm = ConnectionManager.getInstance().getStatement("select email from usuario where email=? and senha=?");
+			PreparedStatement stm = ConnectionManager.getInstance().getStatement("select email, papel from usuario where email=? and senha=?");
 			stm.setString(1, txtUsuario.getText());
 			stm.setString(2, String.valueOf(pwdSenha.getPassword()));
 			ResultSet set = stm.executeQuery();
 			if (set.next()) {
 				System.out.println("Logado");
 				Controller.getInstance().setEmailUsuario(set.getString(1));
+				Controller.getInstance().setPapelUsuario(set.getInt(2));
 				Controller.getInstance().hideLogin();
 				Controller.getInstance().showMain();
 			} else {

@@ -197,7 +197,7 @@ public class NovoUsuario extends JFrame {
 			textFieldNome.setText(set.getString(3));
 			textFieldSenha.setText(set.getString(4));
 			chckbxAdministrador.setSelected(set.getBoolean(5));
-			comboBox.setSelectedItem(set.getInt(6));
+			comboBox.setSelectedItem(Papeis.valueOf(set.getInt(6)));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
