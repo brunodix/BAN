@@ -30,7 +30,6 @@ public class Usuarios extends JFrame {
 	private JPanel contentPane;
 	private JButton btnEditar;
 	private JTable table;
-	private JButton btnRemover;
 	private JScrollPane scrollPane;
 	
 	/**
@@ -78,9 +77,6 @@ public class Usuarios extends JFrame {
 			}
 		});
 		contentPane.add(btnEditar, "cell 2 1");
-		
-		btnRemover = new JButton("Remover");
-		contentPane.add(btnRemover, "cell 3 1");
 	}
 	
 	private Object[][] getData() {
