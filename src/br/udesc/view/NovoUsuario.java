@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.DefaultComboBoxModel;
@@ -34,6 +35,7 @@ public class NovoUsuario extends JFrame {
 	private JPasswordField textFieldSenha;
 	private JCheckBox chckbxAdministrador;
 	private JComboBox<Papeis> comboBox;
+	private boolean edit;
 
 	/**
 	 * Create the frame.
@@ -87,7 +89,11 @@ public class NovoUsuario extends JFrame {
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				tryInsert();
+				if (edit) {
+					tryUpdate();
+				} else {
+					tryInsert();
+				}
 			}
 		});
 		
@@ -134,6 +140,64 @@ public class NovoUsuario extends JFrame {
 			stm.setInt(6, ((Papeis) comboBox.getSelectedItem()).getValue());
 			
 			stm.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void tryUpdate() {
+		if (textFieldEmail.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "O e-mail é obrigatório!");
+			return;
+		}
+		if (textFieldCpf.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "O CPF é obrigatório!");
+			return;
+		}
+		if (textFieldNome.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "O nome é obrigatório!");
+			return;
+		}
+		if (textFieldSenha.getPassword().length == 0) {
+			JOptionPane.showMessageDialog(this, "A senha é obrigatória!");
+			return;
+		}
+		if (comboBox.getSelectedItem() == null) {
+			JOptionPane.showMessageDialog(this, "Selecione um papel!");
+			return;
+		}
+		
+		
+		try {
+			PreparedStatement stm = ConnectionManager.getInstance().getStatement("update usuario set email=?, cpf=?, nome=?, senha=?, ativo=?, papel=? where email=?");
+			stm.setString(1, textFieldEmail.getText());
+			stm.setString(2, textFieldCpf.getText());
+			stm.setString(3, textFieldNome.getText());
+			stm.setString(4, String.valueOf(textFieldSenha.getPassword()));
+			stm.setBoolean(5, chckbxAdministrador.isSelected());
+			stm.setInt(6, ((Papeis) comboBox.getSelectedItem()).getValue());
+			stm.setString(7, textFieldEmail.getText());
+			if (stm.execute()) {
+				JOptionPane.showMessageDialog(this, "Usuário atualizado!");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void edit(String value) {
+		edit = true;
+		try {
+			PreparedStatement stm = ConnectionManager.getInstance().getStatement("select email, cpf, nome, senha, ativo, papel from usuario where email = ?");
+			stm.setString(1, value);
+			ResultSet set = stm.executeQuery();
+			set.next();
+			textFieldEmail.setText(set.getString(1));
+			textFieldCpf.setText(set.getString(2));
+			textFieldNome.setText(set.getString(3));
+			textFieldSenha.setText(set.getString(4));
+			chckbxAdministrador.setSelected(set.getBoolean(5));
+			comboBox.setSelectedItem(set.getInt(6));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
