@@ -1,12 +1,9 @@
 package br.udesc;
 
-import javax.swing.JDialog;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import br.udesc.view.Controller;
-import br.udesc.view.Login;
 
 public class Main {
 

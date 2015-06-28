@@ -6,8 +6,6 @@ import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -75,8 +73,6 @@ public class NovaConsulta extends JFrame {
 	}
 	
 	private void setTipo() {
-		Object[] result = new Object[0];
-		List<Object[]> list = new ArrayList<>();
 		try {
 			StringBuilder sbr = new StringBuilder();
 			sbr.append(

@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
@@ -20,11 +21,10 @@ import net.miginfocom.swing.MigLayout;
 import br.udesc.core.ConnectionManager;
 import br.udesc.core.Papeis;
 
-import javax.swing.JScrollPane;
-
 public class Usuarios extends JFrame {
 
-	
+	private static final long serialVersionUID = 1L;
+
 	public final static String COLUMN_NAMES[] = { "E-mail","Nome", "CPF" };
 	
 	private JPanel contentPane;

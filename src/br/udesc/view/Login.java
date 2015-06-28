@@ -26,6 +26,8 @@ import java.awt.Color;
 
 public class Login extends JDialog {
 
+	private static final long serialVersionUID = 1L;
+	
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtUsuario;
 	private JPasswordField pwdSenha;
