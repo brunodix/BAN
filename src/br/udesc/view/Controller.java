@@ -10,6 +10,8 @@ public class Controller {
 		return instance;
 	}
 	
+	private String emailUsuario;
+	
 	private Login login;	
 	private Main window;
 	private Consultas consultas;
@@ -58,6 +60,14 @@ public class Controller {
 	public void hideNovoUsuario(){
 		novousuario.setVisible(false);
 		novousuario.dispose();
+	}
+
+	public String getEmailUsuario() {
+		return emailUsuario;
+	}
+
+	public void setEmailUsuario(String emailUsuario) {
+		this.emailUsuario = emailUsuario;
 	}
 
 }

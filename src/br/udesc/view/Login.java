@@ -103,6 +103,7 @@ public class Login extends JDialog {
 			ResultSet set = stm.executeQuery();
 			if (set.next()) {
 				System.out.println("Logado");
+				Controller.getInstance().setEmailUsuario(set.getString(1));
 				Controller.getInstance().hideLogin();
 				Controller.getInstance().showMain();
 			} else {
