@@ -6,17 +6,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
 import br.udesc.core.ConnectionManager;
-import javax.swing.ListSelectionModel;
-import javax.swing.JScrollPane;
 
 public class Consultas extends JFrame {
 
@@ -50,9 +49,6 @@ public class Consultas extends JFrame {
 		table.setCellSelectionEnabled(true);
 		table.setColumnSelectionAllowed(true);
 		table.setModel(new DefaultTableModel(getData(), COLUMN_NAMES));
-
-		JButton btnNovo = new JButton("Novo");
-		contentPane.add(btnNovo, "cell 1 1");
 	}
 
 	private Object[][] getData() {

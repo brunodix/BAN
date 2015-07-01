@@ -177,7 +177,7 @@ public class NovoUsuario extends JFrame {
 			stm.setBoolean(5, chckbxAdministrador.isSelected());
 			stm.setInt(6, ((Papeis) comboBox.getSelectedItem()).getValue());
 			stm.setString(7, textFieldEmail.getText());
-			if (stm.execute()) {
+			if (stm.executeUpdate() > 0) {
 				JOptionPane.showMessageDialog(this, "Usuário atualizado!");
 			}
 		} catch (SQLException e) {
